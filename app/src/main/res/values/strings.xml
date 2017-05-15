@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Writers</string>
+    <string name="sign_in">Sign In</string>
+    <string name="name">Name</string>
+    <string name="pages">Pages</string>
+    <string name="skip_to_timer">Skip to timer</string>
+    <string name="start">Start</string>
+
+</resources>
