@@ -1,62 +1,61 @@
 package com.cbrant.writers;
 
-import android.text.Editable;
-
 /**
- * Created by cbrant on 5/15/2017.
+ * Created by cbrant on 5/17/2017.
  */
 
-// class for keeping track of who has how many pages, and if they are an anchor or not.
-
 public class Person {
-    private int pages;
-    private String name;
-    private boolean isAnchorOrange = false;
-    private boolean isAnchorBlue = false;
 
-    public Person(String n, Editable text){
+    //private variables
+    int id;
+    String name;
+    String pages;
+
+    // Empty constructor
+    public Person() {
 
     }
 
-    public Person(String n, int p){
-        pages = p;
-        name = n;
+    // constructor
+    public Person(int id, String name, String pages) {
+        this.id = id;
+        this.name = name;
+        this.pages = pages;
     }
 
-    public boolean isAnchorOrange() {
-        return isAnchorOrange;
+    // constructor
+    public Person(String name, String pages) {
+        this.name = name;
+        this.pages = pages;
     }
 
-    public void setAnchorOrange(boolean anchorOrange) {
-        isAnchorOrange = anchorOrange;
+    // getting ID
+    public int getID() {
+        return this.id;
     }
 
-    public boolean isAnchorBlue() {
-        return isAnchorBlue;
+    // setting id
+    public void setID(int id) {
+        this.id = id;
     }
 
-    public void setAnchorBlue(boolean anchorBlue) {
-        isAnchorBlue = anchorBlue;
-    }
-
+    // getting name
     public String getName() {
-        return name;
+        return this.name;
     }
 
+    // setting name
     public void setName(String name) {
         this.name = name;
     }
 
-    public int getPages() {
-        return pages;
+    // getting phone number
+    public String getPages() {
+        return this.pages;
     }
 
-    public void setPages(int pages) {
+    // setting phone number
+    public void setPages(String pages) {
         this.pages = pages;
     }
-
-
-
-
-
 }

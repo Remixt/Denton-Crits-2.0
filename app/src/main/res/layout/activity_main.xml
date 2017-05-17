@@ -62,6 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center|fill|end"
         android:gravity="bottom|fill"
+        android:onClick="startGroup"
         android:text="@string/start"
         android:visibility="visible" />
 
