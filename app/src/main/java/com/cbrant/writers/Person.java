@@ -60,6 +60,8 @@ public class Person {
         if (color.equals("Blue")){
             isBlueA = true;
             isOrangeA = false;
+            isOrange = false;
+            isBlue = false;
         }else if(color.equals("Orange")){
             isOrangeA = true;
             isBlueA = false;
@@ -68,8 +70,6 @@ public class Person {
         }else{
             isOrangeA = false;
             isBlueA = false;
-            isBlue = false;
-            isOrange = false;
         }
     }
     public void setGroup(String color){

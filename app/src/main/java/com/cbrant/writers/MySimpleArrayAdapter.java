@@ -122,6 +122,7 @@ public class MySimpleArrayAdapter extends ArrayAdapter<String> {
             if (people.get(i).isBlueA() || people.get(i).isOrangeA()) {
                 temp.add(people.get(i));
                 people.remove(i);
+                i--;
 
             }
         }
