@@ -16,7 +16,7 @@
         <ListView
             android:id="@+id/peopleList"
             android:layout_width="match_parent"
-            android:layout_height="548dp"
+            android:layout_height="511dp"
             android:layout_weight="0.51"
             android:choiceMode="multipleChoice"
             android:clickable="true"
@@ -27,10 +27,21 @@
 
     <Button
         android:id="@+id/btnSort"
-        android:layout_width="172dp"
+        android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_column="1"
         android:layout_row="8"
-        android:text="Sort" />
+        android:onClick="shuffle"
+        android:text="Shuffle" />
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_column="1"
+        android:layout_row="8"
+        android:layout_weight="0"
+        android:onClick="reset"
+        android:text="Reset" />
 
 </LinearLayout>

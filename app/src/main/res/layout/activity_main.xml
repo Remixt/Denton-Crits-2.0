@@ -20,7 +20,7 @@
         <EditText
             android:id="@+id/nameField"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/name"
@@ -29,7 +29,7 @@
         <EditText
             android:id="@+id/pageField"
             android:layout_width="79dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/pages"
@@ -40,35 +40,43 @@
     <Button
         android:id="@+id/btnSignin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_in"
-        android:onClick="signIn"/>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_weight="0.81" />
+        android:layout_height="98dp"
+        android:onClick="signIn"
+        android:text="@string/sign_in" />
 
     <TextClock
         android:id="@+id/textClock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="0.30"
+        android:textAlignment="center"
+        android:textSize="35sp"
+        android:textStyle="bold"
         tools:targetApi="jelly_bean_mr1" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="152dp"
+        app:srcCompat="@mipmap/crits_logo"
+        android:layout_weight="0.51" />
 
     <Button
         android:id="@+id/btnStart"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center|fill|end"
-        android:gravity="bottom|fill"
         android:onClick="startGroup"
-        android:text="@string/start"
-        android:visibility="visible" />
+        android:text="Start" />
+
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clear Names" />
 
     <Button
         android:id="@+id/btnSkip"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.01"
         android:text="@string/skip_to_timer" />
