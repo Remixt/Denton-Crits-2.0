@@ -61,4 +61,8 @@ public class MainActivity extends AppCompatActivity {
     public void startGroup(View view) {
         startActivity(new Intent(MainActivity.this, GroupSortActivity.class));
     }
+    //empty the database
+    public void clearTable(View view){
+        db.deleteAll();
+    }
 }
