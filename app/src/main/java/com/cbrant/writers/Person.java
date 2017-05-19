@@ -60,6 +60,8 @@ public class Person {
         if (color.equals("Blue")){
             isBlueA = true;
             isOrangeA = false;
+            isBlue = false;
+            isOrange = false;
         }else if(color.equals("Orange")){
             isOrangeA = true;
             isBlueA = false;
