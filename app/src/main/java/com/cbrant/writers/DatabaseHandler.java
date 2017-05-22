@@ -83,8 +83,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting All Contacts
-    public List<Person> getAllPeople() {
-        List<Person> personList = new ArrayList<Person>();
+    public ArrayList<Person> getAllPeople() {
+        ArrayList<Person> personList = new ArrayList<Person>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_SIGNIN;
 
@@ -128,13 +128,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Deleting single person
+    // Deleting Everything
     public void deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_SIGNIN, null,null);
         db.close();
     }
 
+    // Delete Single
+    public void deleteContact(Person person) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_SIGNIN, KEY_NAME + " = ?",
+                new String[] { String.valueOf(person.getName()) });
+        db.close();
+    }
 
     // Getting contacts Count
     public int getPeopleCount() {

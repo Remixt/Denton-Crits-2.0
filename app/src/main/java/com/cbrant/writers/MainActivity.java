@@ -1,13 +1,22 @@
 package com.cbrant.writers;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.R.id.list;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +25,12 @@ public class MainActivity extends AppCompatActivity {
     private EditText nEdit;
     private Button btnSignIn;
     private DatabaseHandler db;
+    ArrayList<String> names;
+    ArrayList<String> pages;
+    ArrayList<Person> people;
+    DeleteFromListAdapter adapter;
+    List<Person> p;
+    ListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +40,15 @@ public class MainActivity extends AppCompatActivity {
         pEdit = (EditText) findViewById(R.id.pageField);
         btnSignIn = (Button) findViewById(R.id.btnSignin);
         db = new DatabaseHandler(this);
+
     }
 
     //records the values entered for name and pages, creates a new instance of person class to keep track.
     public void signIn(View view) {
         if (nEdit.getText().length() > 0 && pEdit.getText().length() > 0) {
-            db.addPerson(new Person(nEdit.getText().toString(), pEdit.getText().toString()));
+           Person person = new Person(nEdit.getText().toString(), pEdit.getText().toString());
+            db.addPerson(person);
+            people.add(person);
             nEdit.setText("");
             pEdit.setText("");
 
@@ -84,6 +102,44 @@ public class MainActivity extends AppCompatActivity {
         builder.setMessage("Are you sure you want to delete all the names?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
 
+
+    }
+
+    public void removeSingle(View view){
+
+
+        p = db.getAllPeople();
+        list = new ListView(this);
+        names = new ArrayList<String>();
+        pages = new ArrayList<String>();
+        people = new ArrayList<Person>();
+        for (Person person : p) {
+            names.add(person.getName());
+            people.add(person);
+        }
+        adapter = new DeleteFromListAdapter(this, people,names);
+        list.setAdapter(adapter);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete Names")
+                .setView(list)
+                .setNeutralButton("Done", null)
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if(adapter.getDeleteFlags() != null){
+                            ArrayList<Person> deleteNames = new ArrayList<>();
+                            deleteNames = adapter.getDeleteFlags();
+                            for(int i = 0; i < deleteNames.size(); i++){
+                                db.deleteContact(deleteNames.get(i));
+
+                            }
+                        }
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
     }
 }

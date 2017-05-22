@@ -72,6 +72,9 @@
                 android:ems="10"
                 android:hint="@string/name"
                 android:inputType="textPersonName"
+                android:lines="1"
+                android:maxLength="15"
+                android:maxLines="1"
                 tools:layout_conversion_absoluteHeight="77dp"
                 tools:layout_conversion_absoluteWidth="260dp"
                 tools:layout_conversion_absoluteX="0dp"
@@ -165,6 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="removeSingle"
                     android:text="Delete Single"
                     android:textAllCaps="false" />
 

@@ -17,13 +17,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class MySimpleArrayAdapter extends ArrayAdapter<String> {
+public class AssignGroupAdapter extends ArrayAdapter<String> {
     private final Context context;
     private ArrayList<Person> people;
-    private String cc = "n";
 
-    public MySimpleArrayAdapter(Context context, ArrayList<String> values, ArrayList<String> values1, ArrayList<Person> people) {
-        super(context, R.layout.custom_list, values);
+
+    public AssignGroupAdapter(Context context, ArrayList<Person> people, ArrayList<String> names) {
+        super(context, R.layout.custom_list,names);
         this.context = context;
         this.people = people;
     }
@@ -38,9 +38,8 @@ public class MySimpleArrayAdapter extends ArrayAdapter<String> {
         final TextView txtPageNumber = (TextView) rowView.findViewById(R.id.lblName);
         txtName.setText(people.get(position).getName());
         txtPageNumber.setText(people.get(position).getPages());
-        ImageView writersLogo = (ImageView) rowView.findViewById(R.id.iconIsAnchor);
+        final ImageView writersLogo = (ImageView) rowView.findViewById(R.id.iconIsAnchor);
         writersLogo.setVisibility(View.INVISIBLE);
-        final int p = position;
 
         if (people.get(position).isOrangeA()) {
             changeAnchorOrange(txtName, position);
@@ -58,13 +57,15 @@ public class MySimpleArrayAdapter extends ArrayAdapter<String> {
 
             @Override
             public void onClick(View v) {
-                if (people.get(p).isOrangeA()) {
+                if (people.get(position).isOrangeA()) {
                     changeAnchorWhite(txtName, position);
-
-                } else if (people.get(p).isBlueA()) {
+                    writersLogo.setVisibility(View.INVISIBLE);
+                } else if (people.get(position).isBlueA()) {
                     changeAnchorOrange(txtName, position);
+                    writersLogo.setVisibility(View.VISIBLE);
                 } else {
                     changeAnchorBlue(txtName, position);
+                    writersLogo.setVisibility(View.VISIBLE);
                 }
             }
 
