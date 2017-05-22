@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,79 +7,162 @@
     android:clickable="true"
     android:orientation="vertical"
     android:visibility="visible"
+    android:weightSum="1"
     tools:context="com.cbrant.writers.MainActivity"
     tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp"
-    android:weightSum="1">
+    tools:layout_editor_absoluteY="0dp">
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="77dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-        <EditText
-            android:id="@+id/nameField"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="@string/name"
-            android:inputType="textPersonName" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/pageField"
-            android:layout_width="79dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="@string/pages"
-            android:inputType="number" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:srcCompat="@mipmap/crits_logo"
+                tools:layout_conversion_absoluteHeight="192dp"
+                tools:layout_conversion_absoluteWidth="384dp"
+                tools:layout_conversion_absoluteX="0dp"
+                tools:layout_conversion_absoluteY="240dp"
+                tools:layout_editor_absoluteY="240dp" />
+
+            <TextClock
+                android:id="@+id/textClock"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                tools:layout_conversion_absoluteHeight="65dp"
+                tools:layout_conversion_absoluteWidth="384dp"
+                tools:layout_conversion_absoluteX="0dp"
+                tools:layout_conversion_absoluteY="175dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="175dp"
+                tools:targetApi="jelly_bean_mr1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/nameField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/name"
+                android:inputType="textPersonName"
+                tools:layout_conversion_absoluteHeight="77dp"
+                tools:layout_conversion_absoluteWidth="260dp"
+                tools:layout_conversion_absoluteX="0dp"
+                tools:layout_conversion_absoluteY="0dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <EditText
+                android:id="@+id/pageField"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/pages"
+                android:inputType="number"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_conversion_absoluteHeight="77dp"
+                tools:layout_conversion_absoluteWidth="124dp"
+                tools:layout_conversion_absoluteX="260dp"
+                tools:layout_conversion_absoluteY="0dp"
+                tools:layout_editor_absoluteY="8dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSignin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorControlActivated"
+            android:onClick="signIn"
+            android:text="@string/sign_in"
+            android:textAllCaps="false"
+            tools:layout_conversion_absoluteHeight="98dp"
+            tools:layout_conversion_absoluteWidth="384dp"
+            tools:layout_conversion_absoluteX="0dp"
+            tools:layout_conversion_absoluteY="77dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="77dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnClear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clearTable"
+                android:text="Clear Names"
+                android:textAllCaps="false"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="384dp"
+                tools:layout_conversion_absoluteX="0dp"
+                tools:layout_conversion_absoluteY="480dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="480dp" />
+
+            <Button
+                android:id="@+id/btnSkip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/skip_to_timer"
+                android:textAllCaps="false"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="384dp"
+                tools:layout_conversion_absoluteX="0dp"
+                tools:layout_conversion_absoluteY="528dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="528dp" />
+
+            <Button
+                android:id="@+id/btnStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="startGroup"
+                android:text="Start"
+                android:textAllCaps="false"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="384dp"
+                tools:layout_conversion_absoluteX="0dp"
+                tools:layout_conversion_absoluteY="432dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="432dp" />
+        </LinearLayout>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnSignin"
-        android:layout_width="match_parent"
-        android:layout_height="98dp"
-        android:onClick="signIn"
-        android:text="@string/sign_in" />
 
-    <TextClock
-        android:id="@+id/textClock"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.30"
-        android:textAlignment="center"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        tools:targetApi="jelly_bean_mr1" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="152dp"
-        app:srcCompat="@mipmap/crits_logo"
-        android:layout_weight="0.51" />
-
-    <Button
-        android:id="@+id/btnStart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="startGroup"
-        android:text="Start" />
-
-    <Button
-        android:id="@+id/btnClear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="clearTable"
-        android:text="Clear Names" />
-
-    <Button
-        android:id="@+id/btnSkip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.01"
-        android:text="@string/skip_to_timer" />
-
-</LinearLayout>
+</RelativeLayout>

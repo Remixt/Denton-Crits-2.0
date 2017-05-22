@@ -19,16 +19,12 @@ import java.util.Collections;
 
 public class MySimpleArrayAdapter extends ArrayAdapter<String> {
     private final Context context;
-    private final ArrayList<String> values;
-    private final ArrayList<String> values1;
     private ArrayList<Person> people;
     private String cc = "n";
 
     public MySimpleArrayAdapter(Context context, ArrayList<String> values, ArrayList<String> values1, ArrayList<Person> people) {
         super(context, R.layout.custom_list, values);
         this.context = context;
-        this.values = values;
-        this.values1 = values1;
         this.people = people;
     }
 
@@ -38,37 +34,37 @@ public class MySimpleArrayAdapter extends ArrayAdapter<String> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.custom_list, parent, false);
 
-        final TextView textView = (TextView) rowView.findViewById(R.id.lblPage);
-        TextView textView1 = (TextView) rowView.findViewById(R.id.lblName);
-        textView.setText(people.get(position).getName());
-        textView1.setText(people.get(position).getPages());
-        ImageView img = (ImageView) rowView.findViewById(R.id.iconIsAnchor);
-        img.setVisibility(View.INVISIBLE);
+        final TextView txtName = (TextView) rowView.findViewById(R.id.lblPage);
+        final TextView txtPageNumber = (TextView) rowView.findViewById(R.id.lblName);
+        txtName.setText(people.get(position).getName());
+        txtPageNumber.setText(people.get(position).getPages());
+        ImageView writersLogo = (ImageView) rowView.findViewById(R.id.iconIsAnchor);
+        writersLogo.setVisibility(View.INVISIBLE);
         final int p = position;
 
         if (people.get(position).isOrangeA()) {
-            changeAnchorOrange(textView, position);
-            img.setVisibility(View.VISIBLE);
+            changeAnchorOrange(txtName, position);
+            writersLogo.setVisibility(View.VISIBLE);
         } else if (people.get(position).isBlueA()) {
-            changeAnchorBlue(textView, position);
-            img.setVisibility(View.VISIBLE);
+            changeAnchorBlue(txtName, position);
+            writersLogo.setVisibility(View.VISIBLE);
         } else if (people.get(position).isOrange()) {
-            changeColorOrange(textView, position);
+            changeColorOrange(txtName, position);
         } else if (people.get(position).isBlue()) {
-            changeColorBlue(textView, position);
+            changeColorBlue(txtName, position);
         }
         // When a name on the list pressed/clicked make them an anchor and change the color, cycles between orange, blue, and not an anchor (white)
-        textView.setOnClickListener(new View.OnClickListener() {
+        txtName.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 if (people.get(p).isOrangeA()) {
-                    changeAnchorWhite(textView, position);
+                    changeAnchorWhite(txtName, position);
 
                 } else if (people.get(p).isBlueA()) {
-                    changeAnchorOrange(textView, position);
+                    changeAnchorOrange(txtName, position);
                 } else {
-                    changeAnchorBlue(textView, position);
+                    changeAnchorBlue(txtName, position);
                 }
             }
 
@@ -114,20 +110,35 @@ public class MySimpleArrayAdapter extends ArrayAdapter<String> {
         people.get(position).setAnchor("Blue");
     }
 
-    // removes anchors from the list and then evenly sorts the list into blue and orange groups
+    // Splits people into three groups, anchors, people with pages, and people without pages. Then it evenly(as possible) distributes people with and without pages into two groups.
     public ArrayList<Person> shuffle() {
-        ArrayList<Person> temp = new ArrayList<>();
+
+        ArrayList<Person> haveNoPages = new ArrayList<>(); // people who don't have pages, including anchors.
+        ArrayList<Person> anchorList = new ArrayList<>(); // people who are Anchors.
+
+        // Split people who don't have pages
+        for(int i = 0; i < people.size(); i++){
+            if(people.get(i).getPages().equals("0")){
+                haveNoPages.add(people.get(i));
+                people.remove(i);
+                i--;
+            }
+        }
+
         // holds the anchors temporarily
         for (int i = 0; i < people.size(); i++) {
             if (people.get(i).isBlueA() || people.get(i).isOrangeA()) {
-                temp.add(people.get(i));
+                anchorList.add(people.get(i));
                 people.remove(i);
                 i--;
-
             }
         }
-        Collections.shuffle(people);
 
+        // Randomize the lists to "draw" names.
+        Collections.shuffle(people);
+        Collections.shuffle(haveNoPages);
+
+        // Alternate group placement until the list is empty.
         for (int i = 0; i < people.size(); i++) {
             if (i % 2 == 0) {
                 people.get(i).setGroup("Orange");
@@ -135,8 +146,20 @@ public class MySimpleArrayAdapter extends ArrayAdapter<String> {
                 people.get(i).setGroup("Blue");
             }
         }
-        people.addAll(temp);
-        temp.clear();
+
+        // Alternate group placement until the list is empty.
+        for (int i = 0; i < haveNoPages.size(); i++) {
+            if (i % 2 == 0) {
+                haveNoPages.get(i).setGroup("Orange");
+            } else {
+                haveNoPages.get(i).setGroup("Blue");
+            }
+        }
+
+        people.addAll(anchorList);
+        people.addAll(haveNoPages);
+        anchorList.clear();
+        haveNoPages.clear();
         return people;
     }
 
