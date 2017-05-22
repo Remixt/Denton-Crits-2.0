@@ -113,39 +113,12 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="100dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btnClear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="clearTable"
-                android:text="Clear Names"
-                android:textAllCaps="false"
-                tools:layout_conversion_absoluteHeight="48dp"
-                tools:layout_conversion_absoluteWidth="384dp"
-                tools:layout_conversion_absoluteX="0dp"
-                tools:layout_conversion_absoluteY="480dp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="480dp" />
-
-            <Button
-                android:id="@+id/btnSkip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/skip_to_timer"
-                android:textAllCaps="false"
-                tools:layout_conversion_absoluteHeight="48dp"
-                tools:layout_conversion_absoluteWidth="384dp"
-                tools:layout_conversion_absoluteX="0dp"
-                tools:layout_conversion_absoluteY="528dp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="528dp" />
 
             <Button
                 android:id="@+id/btnStart"
@@ -160,6 +133,62 @@
                 tools:layout_conversion_absoluteY="432dp"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="432dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="25dp" />
+
+            <Button
+                android:id="@+id/btnSkip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/skip_to_timer"
+                android:textAllCaps="false"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="384dp"
+                tools:layout_conversion_absoluteX="0dp"
+                tools:layout_conversion_absoluteY="528dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="528dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="25dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Delete Single"
+                    android:textAllCaps="false" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btnClear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="clearTable"
+                    android:text="Clear Names"
+                    android:textAllCaps="false"
+                    tools:layout_conversion_absoluteHeight="48dp"
+                    tools:layout_conversion_absoluteWidth="384dp"
+                    tools:layout_conversion_absoluteX="0dp"
+                    tools:layout_conversion_absoluteY="480dp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="480dp" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

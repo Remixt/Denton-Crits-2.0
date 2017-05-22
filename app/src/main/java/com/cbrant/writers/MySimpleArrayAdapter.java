@@ -162,5 +162,4 @@ public class MySimpleArrayAdapter extends ArrayAdapter<String> {
         haveNoPages.clear();
         return people;
     }
-
 }
