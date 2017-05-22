@@ -110,11 +110,14 @@ public class MySimpleArrayAdapter extends ArrayAdapter<String> {
         people.get(position).setAnchor("Blue");
     }
 
+
     // Splits people into three groups, anchors, people with pages, and people without pages. Then it evenly(as possible) distributes people with and without pages into two groups.
     public ArrayList<Person> shuffle() {
 
         ArrayList<Person> haveNoPages = new ArrayList<>(); // people who don't have pages, including anchors.
         ArrayList<Person> anchorList = new ArrayList<>(); // people who are Anchors.
+
+        int blueSize = 0 , orangeSize = 0;
 
         // Split people who don't have pages
         for(int i = 0; i < people.size(); i++){
@@ -128,6 +131,11 @@ public class MySimpleArrayAdapter extends ArrayAdapter<String> {
         // holds the anchors temporarily
         for (int i = 0; i < people.size(); i++) {
             if (people.get(i).isBlueA() || people.get(i).isOrangeA()) {
+                if(people.get(i).isBlueA()){
+                    blueSize ++;
+                } else {
+                    orangeSize++;
+                }
                 anchorList.add(people.get(i));
                 people.remove(i);
                 i--;
