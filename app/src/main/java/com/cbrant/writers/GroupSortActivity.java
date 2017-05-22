@@ -5,14 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.support.constraint.R.id.parent;
 
 public class GroupSortActivity extends AppCompatActivity {
     ListView list;
@@ -21,7 +17,7 @@ public class GroupSortActivity extends AppCompatActivity {
     ArrayList<String> names;
     ArrayList<String> pages;
     ArrayList<Person> people;
-    MySimpleArrayAdapter adapter;
+    AssignGroupAdapter adapter;
     List<Person> p;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +31,10 @@ public class GroupSortActivity extends AppCompatActivity {
         pages = new ArrayList<String>();
         people = new ArrayList<Person>();
         for (Person person : p) {
-            String log = "Id: " + person.getID() + " ,Name: " + person.getName() + " ,Pages: " + person.getPages();
-            Log.i("Groupsort ", log);
             names.add(person.getName());
-            pages.add(person.getPages());
             people.add(person);
         }
-        adapter = new MySimpleArrayAdapter(this, names, pages,people);
+        adapter = new AssignGroupAdapter(this, people, names);
         list.setAdapter(adapter);
         list.getAdapter().getCount();
     }
@@ -51,7 +44,7 @@ public class GroupSortActivity extends AppCompatActivity {
     public void shuffle(View view){
     people = adapter.shuffle();
 
-        adapter = new MySimpleArrayAdapter(this, names, pages,people);
+        adapter = new AssignGroupAdapter(this, people,names);
         list.setAdapter(adapter);
         list.setClickable(false);
     }
@@ -59,8 +52,9 @@ public class GroupSortActivity extends AppCompatActivity {
     public void reset(View view){
         for(int i = 0; i < people.size(); i++){
             people.get(i).setGroup("White");
+            people.get(i).setAnchor("White");
         }
-        adapter = new MySimpleArrayAdapter(this, names, pages,people);
+        adapter = new AssignGroupAdapter(this, people,names);
         list.setAdapter(adapter);
         list.setClickable(true);
     }
