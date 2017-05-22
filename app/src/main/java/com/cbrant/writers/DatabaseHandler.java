@@ -128,6 +128,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    // Deleting single person
+    public void deleteAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_SIGNIN, null,null);
+        db.close();
+    }
+
 
     // Getting contacts Count
     public int getPeopleCount() {

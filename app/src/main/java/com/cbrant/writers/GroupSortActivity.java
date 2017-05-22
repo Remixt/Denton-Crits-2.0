@@ -53,6 +53,7 @@ public class GroupSortActivity extends AppCompatActivity {
 
         adapter = new MySimpleArrayAdapter(this, names, pages,people);
         list.setAdapter(adapter);
+        list.setClickable(false);
     }
 
     public void reset(View view){
@@ -61,5 +62,6 @@ public class GroupSortActivity extends AppCompatActivity {
         }
         adapter = new MySimpleArrayAdapter(this, names, pages,people);
         list.setAdapter(adapter);
+        list.setClickable(true);
     }
 }
