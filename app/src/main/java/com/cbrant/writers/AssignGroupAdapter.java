@@ -114,61 +114,36 @@ public class AssignGroupAdapter extends ArrayAdapter<String> {
 
     // Splits people into three groups, anchors, people with pages, and people without pages. Then it evenly(as possible) distributes people with and without pages into two groups.
     public ArrayList<Person> shuffle() {
-
-        ArrayList<Person> haveNoPages = new ArrayList<>(); // people who don't have pages, including anchors.
-        ArrayList<Person> anchorList = new ArrayList<>(); // people who are Anchors.
-
-        int blueSize = 0 , orangeSize = 0;
-
-        // Split people who don't have pages
-        for(int i = 0; i < people.size(); i++){
-            if(people.get(i).getPages().equals("0")){
-                haveNoPages.add(people.get(i));
-                people.remove(i);
-                i--;
-            }
-        }
-
-        // holds the anchors temporarily
-        for (int i = 0; i < people.size(); i++) {
-            if (people.get(i).isBlueA() || people.get(i).isOrangeA()) {
-                if(people.get(i).isBlueA()){
-                    blueSize ++;
-                } else {
-                    orangeSize ++;
-                }
-                anchorList.add(people.get(i));
-                people.remove(i);
-                i--;
-            }
-        }
-
-        // Randomize the lists to "draw" names.
+        int orange = 0;
+        int blue = 0;
+        int orangeWO = 0;
+        int blueWO = 0;
         Collections.shuffle(people);
-        Collections.shuffle(haveNoPages);
-
-        // Alternate group placement until the list is empty.
-        for (int i = 0; i < people.size(); i++) {
-            if (i % 2 == 0) {
-                people.get(i).setGroup("Orange");
-            } else {
+        for(int i = 0; i < people.size(); i++){
+            if(people.get(i).isBlueA()&& people.get(i).getPages().equals("0")){
+                blueWO++;
+            }else if(people.get(i).isBlueA() ){
+                blue++;
+            }
+            else if(people.get(i).isOrangeA() && people.get(i).getPages().equals("0")){
+                orangeWO++;
+            }else if (people.get(i).isOrangeA()){
+                orange++;
+            } else if(people.get(i).getPages().equals("0") && orangeWO >= blueWO){
                 people.get(i).setGroup("Blue");
+                blueWO++;
+            }else if(people.get(i).getPages().equals("0") && orangeWO < blueWO){
+                people.get(i).setGroup("Orange");
+                orangeWO++;
+            }else if(orange >= blue){
+                people.get(i).setGroup("Blue");
+                blue++;
+            }else if(blue > orange){
+                people.get(i).setGroup("Orange");
+                orange++;
             }
         }
 
-        // Alternate group placement until the list is empty.
-        for (int i = 0; i < haveNoPages.size(); i++) {
-            if (i % 2 == 0) {
-                haveNoPages.get(i).setGroup("Orange");
-            } else {
-                haveNoPages.get(i).setGroup("Blue");
-            }
-        }
-
-        people.addAll(anchorList);
-        people.addAll(haveNoPages);
-        anchorList.clear();
-        haveNoPages.clear();
         return people;
     }
 }

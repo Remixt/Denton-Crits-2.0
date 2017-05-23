@@ -57,9 +57,6 @@ public class DeleteFromListAdapter extends ArrayAdapter {
             }
 
         });
-
-
-
         return rowView;
     }
     public ArrayList<Person> getDeleteFlags(){
