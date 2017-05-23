@@ -53,7 +53,6 @@ public class DeleteFromListAdapter extends ArrayAdapter {
                     getMultiDeleteFlag.add(people.get(position));
                     txtName.setBackgroundColor(Color.RED);
                     txtPageNumber.setBackgroundColor(Color.RED);
-
                 }
             }
 
