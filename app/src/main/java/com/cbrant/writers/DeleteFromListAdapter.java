@@ -17,7 +17,6 @@ import java.util.ArrayList;
  */
 
 public class DeleteFromListAdapter extends ArrayAdapter {
-
     private final Context context;
     private ArrayList<Person> people;
     public ArrayList<Person> getMultiDeleteFlag = new ArrayList<>();
@@ -46,9 +45,15 @@ public class DeleteFromListAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
 
-                getMultiDeleteFlag.add(people.get(position));
-                txtName.setBackgroundColor(Color.RED);
-                txtPageNumber.setBackgroundColor(Color.RED);
+                if(getMultiDeleteFlag.contains(people.get(position))){
+                    getMultiDeleteFlag.remove(people.get(position));
+                    txtName.setBackgroundColor(Color.WHITE);
+                    txtPageNumber.setBackgroundColor(Color.WHITE);
+                }else{
+                    getMultiDeleteFlag.add(people.get(position));
+                    txtName.setBackgroundColor(Color.RED);
+                    txtPageNumber.setBackgroundColor(Color.RED);
+                }
             }
 
         });
@@ -57,7 +62,6 @@ public class DeleteFromListAdapter extends ArrayAdapter {
 
         return rowView;
     }
-
     public ArrayList<Person> getDeleteFlags(){
         return getMultiDeleteFlag;
     }

@@ -135,7 +135,7 @@ public class AssignGroupAdapter extends ArrayAdapter<String> {
                 if(people.get(i).isBlueA()){
                     blueSize ++;
                 } else {
-                    orangeSize++;
+                    orangeSize ++;
                 }
                 anchorList.add(people.get(i));
                 people.remove(i);
