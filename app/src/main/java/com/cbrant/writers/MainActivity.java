@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> pages;
     ArrayList<String> displayNameList; // list of the names for each member signed in, used in the display under name and pages form.
     ArrayList<Person> people; // list of people currently signed in, and in the database. Includes their name, id, number of pages, and group status (IE blue group or orange group, anchor ect..)
-    ModifyableListAdapter adapter; // adapter that displays a list of members currently in the database, includes action listeners that allow deletion.
+    ModifiableListAdapter adapter; // adapter that displays a list of members currently in the database, includes action listeners that allow deletion.
     List<Person> p;
     ListView list;
     ListView signInList;
@@ -143,16 +143,16 @@ public class MainActivity extends AppCompatActivity {
             names.add(person.getName());
             people.add(person);
         }
-        adapter = new ModifyableListAdapter(this, people, names);
+        adapter = new ModifiableListAdapter(this, people, names);
         list.setAdapter(adapter);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete Names")
+        builder.setTitle("Modify")
                 .setView(list)
                 .setNeutralButton("Done", null)
-                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onDismiss(DialogInterface dialog) {
+                    public void onClick(DialogInterface dialog, int which) {
                         if (adapter.getDeleteFlags() != null) {
                             ArrayList<Person> deleteNames = adapter.getDeleteFlags();
                             for (int i = 0; i < deleteNames.size(); i++) {
@@ -160,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
                                 displayNameList.remove(deleteNames.get(i).getName());
                                 people.remove(deleteNames.get(i));
                                 signInListAdapter.notifyDataSetChanged();
+                                Toast toast = Toast.makeText(getApplicationContext(), "Deleted Successfully", Toast.LENGTH_SHORT);
+                                toast.show();
                             }
                         }
                     }

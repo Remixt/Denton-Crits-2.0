@@ -1,7 +1,9 @@
 package com.cbrant.writers;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -16,12 +19,13 @@ import java.util.ArrayList;
  * Created by cbrant on 5/22/2017.
  */
 
-public class ModifyableListAdapter extends ArrayAdapter {
+public class ModifiableListAdapter extends ArrayAdapter {
     private final Context context;
     private ArrayList<Person> people;
     public ArrayList<Person> getMultiDeleteFlag = new ArrayList<>();
+    DialogInterface.OnClickListener editListener;
 
-    public ModifyableListAdapter(Context context, ArrayList<Person> people, ArrayList<String> names) {
+    public ModifiableListAdapter(Context context, ArrayList<Person> people, ArrayList<String> names) {
         super(context, R.layout.custom_list, names);
         this.context = context;
         this.people = people;
@@ -43,7 +47,6 @@ public class ModifyableListAdapter extends ArrayAdapter {
         txtName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (getMultiDeleteFlag.contains(people.get(position))) {
                     getMultiDeleteFlag.remove(people.get(position));
                     txtName.setBackgroundColor(Color.WHITE);
@@ -57,13 +60,6 @@ public class ModifyableListAdapter extends ArrayAdapter {
 
         });
 
-        txtName.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-                return true;
-            }
-        });
         return rowView;
     }
 
