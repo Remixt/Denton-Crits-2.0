@@ -67,19 +67,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single contact
-    Person getContact(int id) {
+    Boolean doesPersonExist(String name) {
+        boolean exists = false;
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_SIGNIN, new String[]{KEY_ID,
                         KEY_NAME, PAGES}, KEY_ID + "=?",
-                new String[]{String.valueOf(id)}, null, null, null, null);
-        if (cursor != null)
+                new String[]{name}, null, null, null, null);
+        if (cursor != null) {
+            exists = true;
             cursor.moveToFirst();
-
-        Person person = new Person(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2));
+        }
+        //Person person = new Person(Integer.parseInt(cursor.getString(0)),
+        //cursor.getString(1), cursor.getString(2));
         // return person
-        return person;
+        return exists;
     }
 
     // Getting All Contacts
@@ -118,14 +120,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // updating row
         return db.update(TABLE_SIGNIN, values, KEY_ID + " = ?",
                 new String[]{String.valueOf(person.getID())});
-    }
-
-    // Deleting single person
-    public void deletePerson(Person person) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_SIGNIN, KEY_ID + " = ?",
-                new String[]{String.valueOf(person.getID())});
-        db.close();
     }
 
     // Deleting Everything

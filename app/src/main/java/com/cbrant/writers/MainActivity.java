@@ -32,16 +32,6 @@ public class MainActivity extends AppCompatActivity {
     List<Person> p;
     ListView list;
 
-    //checks if a there is a person with a name in the people array list.
-    public static boolean containsName(ArrayList<Person> p, String name){
-        if(p.isEmpty())
-            return false;
-        for(Person object : p) {
-            if (object.getName().equals(name))
-                return true;
-        }
-        return false;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,51 +41,59 @@ public class MainActivity extends AppCompatActivity {
         pEdit = (EditText) findViewById(R.id.pageField);
         btnSignIn = (Button) findViewById(R.id.btnSignin);
         db = new DatabaseHandler(this);
+        people = new ArrayList<>();
+    }
 
+    public Boolean isDupName(String name) {
+        for (Person p : people) {
+            if (p.getName().equals(name))
+                return true;
+        }
+        return false;
     }
 
     //records the values entered for name and pages, creates a new instance of person class to keep track.
     public void signIn(View view) {
-        if (nEdit.getText().length() > 0 && pEdit.getText().length() > 0 && !containsName(people,nEdit.getText().toString())) {
-           Person person = new Person(nEdit.getText().toString(), pEdit.getText().toString());
-            db.addPerson(person);
-            people.add(person);
-            nEdit.setText("");
-            pEdit.setText("");
+        if (nEdit.getText().length() < 1 || pEdit.getText().length() < 1) {
 
-            new AlertDialog.Builder(this)
-                    .setMessage("Success!")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        } else if(containsName(people,nEdit.getText().toString())){
-            new AlertDialog.Builder(this)
-                    .setMessage("There is already a person with that name. Please choose a different name.")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        }
-        else {
+                new AlertDialog.Builder(this)
+                        .setMessage("Make sure you fill out your name and how many pages!")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            } else if (isDupName(nEdit.getText().toString()) == false) {
+                Person person = new Person(nEdit.getText().toString(), pEdit.getText().toString());
+                db.addPerson(person);
+                people.add(person);
+                nEdit.setText("");
+                pEdit.setText("");
 
-            new AlertDialog.Builder(this)
-                    .setMessage("Make sure you fill out your name and how many pages!")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
+                new AlertDialog.Builder(this)
+                        .setMessage("Success!")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            } else {
+                new AlertDialog.Builder(this)
+                        .setMessage("There is already a person with that name. Please choose a different name.")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                nEdit.setText("");
+            }
+
         }
-    }
 
     //starts the group sorting activity after everyone has signed in.
     public void startGroup(View view) {

@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Denton-Crits-2.0.iml" filepath="$PROJECT_DIR$/Denton-Crits-2.0.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Writers.iml" filepath="$PROJECT_DIR$/Writers.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
