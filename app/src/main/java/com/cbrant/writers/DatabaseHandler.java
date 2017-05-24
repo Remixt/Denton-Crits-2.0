@@ -11,27 +11,21 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-    // All Static variables
-    // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 1; // Database Version
+    private static final String DATABASE_NAME = "DentonWriters"; // Database Name
+    private static final String TABLE_SIGNIN = "DentonWritersSignIn"; // Table Name
 
-    // Database Name
-    private static final String DATABASE_NAME = "DentonWriters";
+    // Table database columns
+    private static final String KEY_ID = "ID";
+    private static final String KEY_NAME = "NAME";
+    private static final String PAGES = "PAGES";
 
-    // Contacts table name
-    private static final String TABLE_SIGNIN = "DentonWritersSignIn";
-
-    // Contacts Table Columns names
-    private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "name";
-    private static final String PAGES = "pages";
-
+    // Default constructor
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    // Creating Tables
-    @Override
+    @Override // Creating tables
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_SIGNIN + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
@@ -39,60 +33,45 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
-    // Upgrading database
-    @Override
+    @Override // Upgrading database
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SIGNIN);
-
         // Create tables again
         onCreate(db);
     }
 
-    /**
-     * All CRUD(Create, Read, Update, Delete) Operations
-     */
-
-    // Adding new person
+    // Add new person to the database
     void addPerson(Person person) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, person.getName()); // Person Name
         values.put(PAGES, person.getPages()); // Person Pages
-
         // Inserting Row
         db.insert(TABLE_SIGNIN, null, values);
         db.close(); // Closing database connection
     }
 
-    // Getting single contact
-    Boolean doesPersonExist(String name) {
+    // Search the database to see if a person already exists.
+    Boolean searchFor(Person person) {
         boolean exists = false;
         SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(TABLE_SIGNIN, new String[]{KEY_ID,
-                        KEY_NAME, PAGES}, KEY_ID + "=?",
-                new String[]{name}, null, null, null, null);
+        Cursor cursor = db.query(TABLE_SIGNIN, new String[]{KEY_ID, KEY_NAME, PAGES}, KEY_ID + "=?",
+                new String[]{Integer.toString(person.getID())}, null, null, null, null);
         if (cursor != null) {
             exists = true;
             cursor.moveToFirst();
         }
-        //Person person = new Person(Integer.parseInt(cursor.getString(0)),
-        //cursor.getString(1), cursor.getString(2));
-        // return person
         return exists;
     }
 
-    // Getting All Contacts
+    // Get all people in the database
     public ArrayList<Person> getAllPeople() {
         ArrayList<Person> personList = new ArrayList<Person>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_SIGNIN;
-
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
@@ -104,12 +83,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 personList.add(person);
             } while (cursor.moveToNext());
         }
-
-        // return contact list
+        // return person list
         return personList;
     }
 
-    // Updating single person
+    // Update existing person in the database
     public int updatePerson(Person person) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -122,30 +100,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[]{String.valueOf(person.getID())});
     }
 
-    // Deleting Everything
+    // Deleting every entry in the database
     public void deleteAll() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_SIGNIN, null,null);
+        db.delete(TABLE_SIGNIN, null, null);
         db.close();
     }
 
-    // Delete Single
-    public void deleteContact(Person person) {
+    // Delete a single person from the database
+    public void deletePerson(Person person) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_SIGNIN, KEY_NAME + " = ?",
-                new String[] { String.valueOf(person.getName()) });
+        db.delete(TABLE_SIGNIN, KEY_ID + " = ?",
+                new String[]{String.valueOf(person.getID())});
         db.close();
     }
-
-    // Getting contacts Count
-    public int getPeopleCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_SIGNIN;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        cursor.close();
-
-        // return count
-        return cursor.getCount();
-    }
-
 }

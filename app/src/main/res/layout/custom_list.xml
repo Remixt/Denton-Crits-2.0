@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:weightSum="1">
 
     <ImageView
         android:id="@+id/iconIsAnchor"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginLeft="4px"
-        android:layout_marginRight="10px"
-        android:layout_marginTop="4px"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:src="@drawable/anchor"></ImageView>
 
     <TextView
-        android:id="@+id/lblPage"
-        android:layout_width="230dp"
-        android:layout_height="match_parent"
-        android:text="@+id/lblPage"
-        android:textSize="25sp"
+        android:id="@+id/lblName"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_weight="1.02"
+        android:text="Name"
+        android:textAlignment="viewStart"
+        android:textSize="36sp"
         android:textStyle="bold"></TextView>
 
     <TextView
-        android:id="@+id/lblName"
-        android:layout_width="101dp"
-        android:layout_height="match_parent"
-        android:text="@+id/lblName"
+        android:id="@+id/lblPages"
+        android:layout_width="64dp"
+        android:layout_height="45dp"
+        android:text="9"
+        android:textAlignment="center"
         android:textSize="36sp"
         android:textStyle="bold"></TextView>
 

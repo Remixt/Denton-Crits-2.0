@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -20,15 +19,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 
-    private EditText pEdit;
-    private EditText nEdit;
-    private Button btnSignIn;
-    private DatabaseHandler db;
+    private EditText pagesEdit; // sign in entry form for number of pages
+    private EditText namesEdit; // sign in entry form for the member name
+    private DatabaseHandler database; // handles all database operations
     ArrayList<String> names;
     ArrayList<String> pages;
-    ArrayList<String> namesList;
-    ArrayList<Person> people;
-    DeleteFromListAdapter adapter;
+    ArrayList<String> displayNameList; // list of the names for each member signed in, used in the display under name and pages form.
+    ArrayList<Person> people; // list of people currently signed in, and in the database. Includes their name, id, number of pages, and group status (IE blue group or orange group, anchor ect..)
+    ModifyableListAdapter adapter; // adapter that displays a list of members currently in the database, includes action listeners that allow deletion.
     List<Person> p;
     ListView list;
     ListView signInList;
@@ -38,95 +36,87 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        namesList = new ArrayList<>();
-        nEdit = (EditText) findViewById(R.id.nameField);
-        pEdit = (EditText) findViewById(R.id.pageField);
-        btnSignIn = (Button) findViewById(R.id.btnSignin);
-        db = new DatabaseHandler(this);
+        displayNameList = new ArrayList<>();
+        namesEdit = (EditText) findViewById(R.id.nameField);
+        pagesEdit = (EditText) findViewById(R.id.pageField);
+        database = new DatabaseHandler(this);
         people = new ArrayList<>();
         signInList = (ListView) findViewById(R.id.signInList);
-        signInListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, namesList);
+        signInListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, displayNameList);
         signInList.setAdapter(signInListAdapter);
 
     }
 
-    public Boolean isDupName(String name) {
-        for (Person p : people) {
-            if (p.getName().equals(name))
-                return true;
-        }
-        return false;
-    }
-
     //records the values entered for name and pages, creates a new instance of person class to keep track.
     public void signIn(View view) {
+        //ensure the user filled out the require forms
+        if (namesEdit.getText().length() < 1 || pagesEdit.getText().length() < 1) {
 
-        if (nEdit.getText().length() < 1 || pEdit.getText().length() < 1) {
-
-                new AlertDialog.Builder(this)
-                        .setMessage("Make sure you fill out your name and how many pages!")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-            } else if (isDupName(nEdit.getText().toString()) == false) {
-                Person person = new Person(nEdit.getText().toString(), pEdit.getText().toString());
-                db.addPerson(person);
-                people.add(person);
-            namesList.add(person.getName());
-            signInListAdapter.notifyDataSetChanged();
-            Context context = getApplicationContext();
-            CharSequence text = "Successfully Signed In!";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-            InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            mgr.hideSoftInputFromWindow(nEdit.getWindowToken(), 0);
-                new AlertDialog.Builder(this)
-                        .setMessage("Welcome " + nEdit.getText().toString() + "!")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-            nEdit.setText("");
-            pEdit.setText("");
+            new AlertDialog.Builder(this)
+                    .setMessage("Make sure you fill out your name and how many pages!")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         } else {
-                new AlertDialog.Builder(this)
-                        .setMessage("There is already a person with that name. Please choose a different name.")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-                nEdit.setText("");
-            }
 
+            Person person = new Person(namesEdit.getText().toString(), pagesEdit.getText().toString());
+            database.addPerson(person);
+            people.add(person);
+            displayNameList.add(person.getName());
+
+            // update the visible sign in list view
+            signInListAdapter.notifyDataSetChanged();
+
+            // Let the user know they successfully signed in with a toast notification
+            Toast toast = Toast.makeText(getApplicationContext(), "Successfully Signed In!", Toast.LENGTH_SHORT);
+            toast.show();
+
+            // hide the  keyboard when sign in button is pressed
+            InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            mgr.hideSoftInputFromWindow(namesEdit.getWindowToken(), 0);
+
+            // display the welcome dialog with the users name for further sign in confirmation
+            new AlertDialog.Builder(this)
+                    .setMessage("Welcome " + namesEdit.getText().toString() + "!")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+
+            // reset the sign in form to allow others to sign in
+            namesEdit.setText("");
+            pagesEdit.setText("");
         }
+    }
 
-    //starts the group sorting activity after everyone has signed in.
+    //starts the group sorting activity
     public void startGroup(View view) {
         startActivity(new Intent(MainActivity.this, GroupSortActivity.class));
     }
+
+    //skip the sign in, and grouping activities, move to the timer activity
     public void skipToTimer(View view) {
         startActivity(new Intent(MainActivity.this, TimerActivity.class));
     }
+
     //empty the database
-    public void clearTable(View view){
+    public void clearTable(View view) {
         //make sure they hit the button on purpose.
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which){
+                switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
-                        db.deleteAll();
+                        database.deleteAll();
+                        displayNameList.clear();
+                        people.clear();
+                        signInListAdapter.notifyDataSetChanged();
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -139,14 +129,12 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to delete all the names?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
-
-
     }
 
-    public void removeSingle(View view){
+    // remove a specific entry from the database
+    public void removeSingle(View view) {
 
-
-        p = db.getAllPeople();
+        p = database.getAllPeople();
         list = new ListView(this);
         names = new ArrayList<>();
         pages = new ArrayList<>();
@@ -155,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             names.add(person.getName());
             people.add(person);
         }
-        adapter = new DeleteFromListAdapter(this, people,names);
+        adapter = new ModifyableListAdapter(this, people, names);
         list.setAdapter(adapter);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -165,11 +153,11 @@ public class MainActivity extends AppCompatActivity {
                 .setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        if(adapter.getDeleteFlags() != null){
+                        if (adapter.getDeleteFlags() != null) {
                             ArrayList<Person> deleteNames = adapter.getDeleteFlags();
-                            for(int i = 0; i < deleteNames.size(); i++){
-                                db.deleteContact(deleteNames.get(i));
-                                namesList.remove(deleteNames.get(i).getName());
+                            for (int i = 0; i < deleteNames.size(); i++) {
+                                database.deletePerson(deleteNames.get(i));
+                                displayNameList.remove(deleteNames.get(i).getName());
                                 people.remove(deleteNames.get(i));
                                 signInListAdapter.notifyDataSetChanged();
                             }

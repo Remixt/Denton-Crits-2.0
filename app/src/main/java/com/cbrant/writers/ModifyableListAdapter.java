@@ -16,13 +16,13 @@ import java.util.ArrayList;
  * Created by cbrant on 5/22/2017.
  */
 
-public class DeleteFromListAdapter extends ArrayAdapter {
+public class ModifyableListAdapter extends ArrayAdapter {
     private final Context context;
     private ArrayList<Person> people;
     public ArrayList<Person> getMultiDeleteFlag = new ArrayList<>();
 
-    public DeleteFromListAdapter(Context context, ArrayList<Person> people,ArrayList<String> names) {
-        super(context, R.layout.custom_list,names);
+    public ModifyableListAdapter(Context context, ArrayList<Person> people, ArrayList<String> names) {
+        super(context, R.layout.custom_list, names);
         this.context = context;
         this.people = people;
 
@@ -41,15 +41,14 @@ public class DeleteFromListAdapter extends ArrayAdapter {
 
 
         txtName.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
 
-                if(getMultiDeleteFlag.contains(people.get(position))){
+                if (getMultiDeleteFlag.contains(people.get(position))) {
                     getMultiDeleteFlag.remove(people.get(position));
                     txtName.setBackgroundColor(Color.WHITE);
                     txtPageNumber.setBackgroundColor(Color.WHITE);
-                }else{
+                } else {
                     getMultiDeleteFlag.add(people.get(position));
                     txtName.setBackgroundColor(Color.RED);
                     txtPageNumber.setBackgroundColor(Color.RED);
@@ -57,9 +56,18 @@ public class DeleteFromListAdapter extends ArrayAdapter {
             }
 
         });
+
+        txtName.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                return true;
+            }
+        });
         return rowView;
     }
-    public ArrayList<Person> getDeleteFlags(){
+
+    public ArrayList<Person> getDeleteFlags() {
         return getMultiDeleteFlag;
     }
 }

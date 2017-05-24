@@ -6,7 +6,6 @@ package com.cbrant.writers;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.provider.Contacts;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,38 +33,39 @@ public class AssignGroupAdapter extends ArrayAdapter<String> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.custom_list, parent, false);
 
-        final TextView txtName = (TextView) rowView.findViewById(R.id.lblPage);
-        final TextView txtPageNumber = (TextView) rowView.findViewById(R.id.lblName);
+        final TextView txtName = (TextView) rowView.findViewById(R.id.lblName);
+        final TextView txtPageNumber = (TextView) rowView.findViewById(R.id.lblPages);
         txtName.setText(people.get(position).getName());
         txtPageNumber.setText(people.get(position).getPages());
         final ImageView writersLogo = (ImageView) rowView.findViewById(R.id.iconIsAnchor);
-        writersLogo.setVisibility(View.INVISIBLE);
+        writersLogo.setImageResource(android.R.color.transparent);
 
-        if (people.get(position).isOrangeA()) {
-            changeAnchorOrange(txtName, position);
-            writersLogo.setVisibility(View.VISIBLE);
-        } else if (people.get(position).isBlueA()) {
-            changeAnchorBlue(txtName, position);
-            writersLogo.setVisibility(View.VISIBLE);
-        } else if (people.get(position).isOrange()) {
-            changeColorOrange(txtName, position);
-        } else if (people.get(position).isBlue()) {
-            changeColorBlue(txtName, position);
+        if (people.get(position).isOrangeAnchor()) {
+            changeAnchorOrange(writersLogo,txtName,txtPageNumber, position);
+            writersLogo.setImageResource(R.drawable.anchor);
+        } else if (people.get(position).isBlueAnchor()) {
+            changeAnchorBlue(writersLogo,txtName,txtPageNumber, position);
+            writersLogo.setImageResource(R.drawable.anchor);
+        } else if (people.get(position).isOrangeGroup()) {
+            changeColorOrange(writersLogo,txtName,txtPageNumber, position);
+        } else if (people.get(position).isBlueGroup()) {
+            changeColorBlue(writersLogo,txtName,txtPageNumber, position);
         }
         // When a name on the list pressed/clicked make them an anchor and change the color, cycles between orange, blue, and not an anchor (white)
         txtName.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if (people.get(position).isOrangeA()) {
-                    changeAnchorWhite(txtName, position);
-                    writersLogo.setVisibility(View.INVISIBLE);
-                } else if (people.get(position).isBlueA()) {
-                    changeAnchorOrange(txtName, position);
-                    writersLogo.setVisibility(View.VISIBLE);
+                if (people.get(position).isOrangeAnchor()) {
+                    changeAnchorWhite(writersLogo,txtName,txtPageNumber, position);
+                    writersLogo.setImageResource(android.R.color.transparent);
+                } else if (people.get(position).isBlueAnchor()) {
+                    changeAnchorOrange(writersLogo,txtName,txtPageNumber, position);
+                    writersLogo.setImageResource(R.drawable.anchor);
                 } else {
-                    changeAnchorBlue(txtName, position);
-                    writersLogo.setVisibility(View.VISIBLE);
+                    changeAnchorBlue(writersLogo,txtName,txtPageNumber, position);
+                    writersLogo.setImageResource(R.drawable.anchor);
+                    //writersLogo.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -75,39 +75,51 @@ public class AssignGroupAdapter extends ArrayAdapter<String> {
         return rowView;
     }
 
-    private void changeColorBlue(TextView row, int position) {
-        row.setBackgroundColor(Color.CYAN);
+    private void changeColorBlue(ImageView col1,TextView col2,TextView col3, int position) {
+        col1.setBackgroundColor(Color.CYAN);
+        col2.setBackgroundColor(Color.CYAN);
+        col3.setBackgroundColor(Color.CYAN);
         people.get(position).setAnchor("White");
         people.get(position).setGroup("Blue");
     }
 
-    private void changeColorOrange(TextView row, int position) {
-        row.setBackgroundColor(Color.rgb(255,127,80));
+    private void changeColorOrange(ImageView col1,TextView col2,TextView col3, int position) {
+        col1.setBackgroundColor(Color.rgb(255,127,80));
+        col2.setBackgroundColor(Color.rgb(255,127,80));
+        col3.setBackgroundColor(Color.rgb(255,127,80));
         people.get(position).setAnchor("White");
         people.get(position).setGroup("Orange");
     }
 
-    private void changeColorWhite(TextView row, int position) {
-        row.setBackgroundColor(Color.TRANSPARENT);
+    private void changeColorWhite(ImageView col1,TextView col2,TextView col3, int position) {
+        col1.setBackgroundColor(Color.TRANSPARENT);
+        col2.setBackgroundColor(Color.TRANSPARENT);
+        col3.setBackgroundColor(Color.TRANSPARENT);
         people.get(position).setAnchor("White");
         people.get(position).setGroup("White");
     }
 
     //makes the person an orange anchor
-    void changeAnchorOrange(TextView row, int position) {
-        row.setBackgroundColor(Color.rgb(255,127,80));
+    void changeAnchorOrange(ImageView col1,TextView col2,TextView col3, int position) {
+        col1.setBackgroundColor(Color.rgb(255,127,80));
+        col2.setBackgroundColor(Color.rgb(255,127,80));
+        col3.setBackgroundColor(Color.rgb(255,127,80));
         people.get(position).setAnchor("Orange");
     }
 
     //makes the person not an anchor, called it white for continuity
-    void changeAnchorWhite(TextView row, int position) {
-        row.setBackgroundColor(Color.TRANSPARENT);
+    void changeAnchorWhite(ImageView col1,TextView col2,TextView col3, int position) {
+        col1.setBackgroundColor(Color.TRANSPARENT);
+        col2.setBackgroundColor(Color.TRANSPARENT);
+        col3.setBackgroundColor(Color.TRANSPARENT);
         people.get(position).setAnchor("White");
     }
 
     //makes the person a blue anchor
-    void changeAnchorBlue(TextView row, int position) {
-        row.setBackgroundColor(Color.CYAN);
+    void changeAnchorBlue(ImageView col1,TextView col2,TextView col3, int position) {
+        col1.setBackgroundColor(Color.CYAN);
+        col2.setBackgroundColor(Color.CYAN);
+        col3.setBackgroundColor(Color.CYAN);
         people.get(position).setAnchor("Blue");
     }
 
@@ -120,14 +132,14 @@ public class AssignGroupAdapter extends ArrayAdapter<String> {
         int blueWO = 0;
         Collections.shuffle(people);
         for(int i = 0; i < people.size(); i++){
-            if(people.get(i).isBlueA()&& people.get(i).getPages().equals("0")){
+            if(people.get(i).isBlueAnchor()&& people.get(i).getPages().equals("0")){
                 blueWO++;
-            }else if(people.get(i).isBlueA() ){
+            }else if(people.get(i).isBlueAnchor() ){
                 blue++;
             }
-            else if(people.get(i).isOrangeA() && people.get(i).getPages().equals("0")){
+            else if(people.get(i).isOrangeAnchor() && people.get(i).getPages().equals("0")){
                 orangeWO++;
-            }else if (people.get(i).isOrangeA()){
+            }else if (people.get(i).isOrangeAnchor()){
                 orange++;
             } else if(people.get(i).getPages().equals("0") && orangeWO >= blueWO){
                 people.get(i).setGroup("Blue");
