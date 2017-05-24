@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     //checks if a there is a person with a name in the people array list.
     public static boolean containsName(ArrayList<Person> p, String name){
+        if(p.isEmpty())
+            return false;
         for(Person object : p) {
             if (object.getName().equals(name))
                 return true;
@@ -98,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
     //starts the group sorting activity after everyone has signed in.
     public void startGroup(View view) {
         startActivity(new Intent(MainActivity.this, GroupSortActivity.class));
+    }
+    public void skipToTimer(View view) {
+        startActivity(new Intent(MainActivity.this, TimerActivity.class));
     }
     //empty the database
     public void clearTable(View view){

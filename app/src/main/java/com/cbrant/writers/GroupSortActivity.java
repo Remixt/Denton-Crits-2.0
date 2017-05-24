@@ -1,5 +1,6 @@
 package com.cbrant.writers;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ public class GroupSortActivity extends AppCompatActivity {
     ArrayList<Person> people;
     AssignGroupAdapter adapter;
     List<Person> p;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,5 +59,8 @@ public class GroupSortActivity extends AppCompatActivity {
         adapter = new AssignGroupAdapter(this, people,names);
         list.setAdapter(adapter);
         list.setClickable(true);
+    }
+    public void goToTimer(View view) {
+        startActivity(new Intent(GroupSortActivity.this, TimerActivity.class));
     }
 }
