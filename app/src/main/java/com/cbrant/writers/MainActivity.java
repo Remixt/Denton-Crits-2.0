@@ -32,6 +32,15 @@ public class MainActivity extends AppCompatActivity {
     List<Person> p;
     ListView list;
 
+    //checks if a there is a person with a name in the people array list.
+    public static boolean containsName(ArrayList<Person> p, String name){
+        for(Person object : p) {
+            if (object.getName().equals(name))
+                return true;
+        }
+        return false;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     //records the values entered for name and pages, creates a new instance of person class to keep track.
     public void signIn(View view) {
-        if (nEdit.getText().length() > 0 && pEdit.getText().length() > 0) {
+        if (nEdit.getText().length() > 0 && pEdit.getText().length() > 0 && !containsName(people,nEdit.getText().toString())) {
            Person person = new Person(nEdit.getText().toString(), pEdit.getText().toString());
             db.addPerson(person);
             people.add(person);
@@ -61,7 +70,18 @@ public class MainActivity extends AppCompatActivity {
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
-        } else {
+        } else if(containsName(people,nEdit.getText().toString())){
+            new AlertDialog.Builder(this)
+                    .setMessage("There is already a person with that name. Please choose a different name.")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+        else {
 
             new AlertDialog.Builder(this)
                     .setMessage("Make sure you fill out your name and how many pages!")
