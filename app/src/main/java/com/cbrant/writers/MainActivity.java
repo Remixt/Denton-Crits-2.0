@@ -32,14 +32,6 @@ public class MainActivity extends AppCompatActivity {
     List<Person> p;
     ListView list;
 
-    //checks if a there is a person with a name in the people array list.
-    public static boolean containsName(ArrayList<Person> p, String name){
-        for(Person object : p) {
-            if (object.getName().equals(name))
-                return true;
-        }
-        return false;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,49 +41,60 @@ public class MainActivity extends AppCompatActivity {
         pEdit = (EditText) findViewById(R.id.pageField);
         btnSignIn = (Button) findViewById(R.id.btnSignin);
         db = new DatabaseHandler(this);
+        people = new ArrayList<>();
+    }
 
+    public Boolean isDupName(String name) {
+        for (Person p : people) {
+            if (p.getName().equals(name))
+                return true;
+        }
+        return false;
     }
 
     //records the values entered for name and pages, creates a new instance of person class to keep track.
     public void signIn(View view) {
-        if (nEdit.getText().length() > 0 && pEdit.getText().length() > 0 && !containsName(people,nEdit.getText().toString())) {
-           Person person = new Person(nEdit.getText().toString(), pEdit.getText().toString());
-            db.addPerson(person);
-            people.add(person);
-            nEdit.setText("");
-            pEdit.setText("");
+        if (nEdit.getText().length() > 0 && pEdit.getText().length() > 0) {
 
-            new AlertDialog.Builder(this)
-                    .setMessage("Success!")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        } else if(containsName(people,nEdit.getText().toString())){
-            new AlertDialog.Builder(this)
-                    .setMessage("There is already a person with that name. Please choose a different name.")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        }
-        else {
+            if (nEdit.getText().toString().equals("") || pEdit.getText().toString().equals("")) {
 
-            new AlertDialog.Builder(this)
-                    .setMessage("Make sure you fill out your name and how many pages!")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
+                new AlertDialog.Builder(this)
+                        .setMessage("Make sure you fill out your name and how many pages!")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            } else if (isDupName(nEdit.getText().toString()) == false) {
+                Person person = new Person(nEdit.getText().toString(), pEdit.getText().toString());
+                db.addPerson(person);
+                people.add(person);
+                nEdit.setText("");
+                pEdit.setText("");
+
+                new AlertDialog.Builder(this)
+                        .setMessage("Success!")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            } else {
+                new AlertDialog.Builder(this)
+                        .setMessage("There is already a person with that name. Please choose a different name.")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                nEdit.setText("");
+            }
+
         }
     }
 
@@ -99,13 +102,14 @@ public class MainActivity extends AppCompatActivity {
     public void startGroup(View view) {
         startActivity(new Intent(MainActivity.this, GroupSortActivity.class));
     }
+
     //empty the database
-    public void clearTable(View view){
+    public void clearTable(View view) {
         //make sure they hit the button on purpose.
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which){
+                switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
                         db.deleteAll();
@@ -125,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void removeSingle(View view){
+    public void removeSingle(View view) {
 
 
         p = db.getAllPeople();
@@ -137,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             names.add(person.getName());
             people.add(person);
         }
-        adapter = new DeleteFromListAdapter(this, people,names);
+        adapter = new DeleteFromListAdapter(this, people, names);
         list.setAdapter(adapter);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -147,12 +151,12 @@ public class MainActivity extends AppCompatActivity {
                 .setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        if(adapter.getDeleteFlags() != null){
+                        if (adapter.getDeleteFlags() != null) {
                             ArrayList<Person> deleteNames = new ArrayList<>();
                             deleteNames = adapter.getDeleteFlags();
-                            for(int i = 0; i < deleteNames.size(); i++){
+                            for (int i = 0; i < deleteNames.size(); i++) {
                                 db.deleteContact(deleteNames.get(i));
-
+                                
                             }
                         }
                     }
