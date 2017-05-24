@@ -1,22 +1,21 @@
 package com.cbrant.writers;
 
-import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.id.list;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,21 +26,28 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseHandler db;
     ArrayList<String> names;
     ArrayList<String> pages;
+    ArrayList<String> namesList;
     ArrayList<Person> people;
     DeleteFromListAdapter adapter;
     List<Person> p;
     ListView list;
-
+    ListView signInList;
+    ArrayAdapter<String> signInListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        namesList = new ArrayList<>();
         nEdit = (EditText) findViewById(R.id.nameField);
         pEdit = (EditText) findViewById(R.id.pageField);
         btnSignIn = (Button) findViewById(R.id.btnSignin);
         db = new DatabaseHandler(this);
         people = new ArrayList<>();
+        signInList = (ListView) findViewById(R.id.signInList);
+        signInListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, namesList);
+        signInList.setAdapter(signInListAdapter);
+
     }
 
     public Boolean isDupName(String name) {
@@ -54,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     //records the values entered for name and pages, creates a new instance of person class to keep track.
     public void signIn(View view) {
+
         if (nEdit.getText().length() < 1 || pEdit.getText().length() < 1) {
 
                 new AlertDialog.Builder(this)
@@ -68,19 +75,27 @@ public class MainActivity extends AppCompatActivity {
                 Person person = new Person(nEdit.getText().toString(), pEdit.getText().toString());
                 db.addPerson(person);
                 people.add(person);
-                nEdit.setText("");
-                pEdit.setText("");
+            namesList.add(person.getName());
+            signInListAdapter.notifyDataSetChanged();
+            Context context = getApplicationContext();
+            CharSequence text = "Successfully Signed In!";
+            int duration = Toast.LENGTH_SHORT;
 
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+            InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            mgr.hideSoftInputFromWindow(nEdit.getWindowToken(), 0);
                 new AlertDialog.Builder(this)
-                        .setMessage("Success!")
+                        .setMessage("Welcome " + nEdit.getText().toString() + "!")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
-            } else {
+            nEdit.setText("");
+            pEdit.setText("");
+        } else {
                 new AlertDialog.Builder(this)
                         .setMessage("There is already a person with that name. Please choose a different name.")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -133,9 +148,9 @@ public class MainActivity extends AppCompatActivity {
 
         p = db.getAllPeople();
         list = new ListView(this);
-        names = new ArrayList<String>();
-        pages = new ArrayList<String>();
-        people = new ArrayList<Person>();
+        names = new ArrayList<>();
+        pages = new ArrayList<>();
+        people = new ArrayList<>();
         for (Person person : p) {
             names.add(person.getName());
             people.add(person);
@@ -151,11 +166,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         if(adapter.getDeleteFlags() != null){
-                            ArrayList<Person> deleteNames = new ArrayList<>();
-                            deleteNames = adapter.getDeleteFlags();
+                            ArrayList<Person> deleteNames = adapter.getDeleteFlags();
                             for(int i = 0; i < deleteNames.size(); i++){
                                 db.deleteContact(deleteNames.get(i));
-
+                                namesList.remove(deleteNames.get(i).getName());
+                                people.remove(deleteNames.get(i));
+                                signInListAdapter.notifyDataSetChanged();
                             }
                         }
                     }

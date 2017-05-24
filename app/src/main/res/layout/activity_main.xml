@@ -19,7 +19,8 @@
         android:orientation="vertical"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:weightSum="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -114,9 +115,18 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="77dp" />
 
-        <Space
+        <TextView
+            android:id="@+id/lblSignIn"
             android:layout_width="match_parent"
-            android:layout_height="100dp" />
+            android:layout_height="wrap_content"
+            android:text="Sign in list" />
+
+        <ListView
+            android:id="@+id/signInList"
+            style="@style/Widget.AppCompat.ListView.Menu"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:fadingEdge="horizontal|vertical" />
 
         <LinearLayout
             android:layout_width="match_parent"
