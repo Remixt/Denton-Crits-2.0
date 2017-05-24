@@ -25,6 +25,16 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="goToTimer"
+        android:text="go to timer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="457dp" />
+
+    <Button
         android:id="@+id/btnReset"
         android:layout_width="88dp"
         android:layout_height="48dp"

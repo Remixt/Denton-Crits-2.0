@@ -95,6 +95,15 @@ public class MainActivity extends AppCompatActivity {
                 nEdit.setText("");
             }
 
+            new AlertDialog.Builder(this)
+                    .setMessage("Make sure you fill out your name and how many pages!")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         }
     }
 
@@ -102,14 +111,16 @@ public class MainActivity extends AppCompatActivity {
     public void startGroup(View view) {
         startActivity(new Intent(MainActivity.this, GroupSortActivity.class));
     }
-
+    public void skipToTimer(View view) {
+        startActivity(new Intent(MainActivity.this, TimerActivity.class));
+    }
     //empty the database
-    public void clearTable(View view) {
+    public void clearTable(View view){
         //make sure they hit the button on purpose.
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
+                switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
                         db.deleteAll();
@@ -129,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void removeSingle(View view) {
+    public void removeSingle(View view){
 
 
         p = db.getAllPeople();
@@ -141,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             names.add(person.getName());
             people.add(person);
         }
-        adapter = new DeleteFromListAdapter(this, people, names);
+        adapter = new DeleteFromListAdapter(this, people,names);
         list.setAdapter(adapter);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -151,12 +162,12 @@ public class MainActivity extends AppCompatActivity {
                 .setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        if (adapter.getDeleteFlags() != null) {
+                        if(adapter.getDeleteFlags() != null){
                             ArrayList<Person> deleteNames = new ArrayList<>();
                             deleteNames = adapter.getDeleteFlags();
-                            for (int i = 0; i < deleteNames.size(); i++) {
+                            for(int i = 0; i < deleteNames.size(); i++){
                                 db.deleteContact(deleteNames.get(i));
-                                
+
                             }
                         }
                     }

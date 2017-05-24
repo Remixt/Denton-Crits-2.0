@@ -145,6 +145,7 @@
                 android:id="@+id/btnSkip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="skipToTimer"
                 android:text="@string/skip_to_timer"
                 android:textAllCaps="false"
                 tools:layout_conversion_absoluteHeight="48dp"
