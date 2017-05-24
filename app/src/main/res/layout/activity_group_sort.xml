@@ -25,14 +25,20 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/goTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
         android:onClick="goToTimer"
         android:text="go to timer"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="457dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/btnSort"
+        app:layout_constraintRight_toLeftOf="@+id/btnReset"
+        app:layout_constraintTop_toBottomOf="@+id/peopleList"
+        app:layout_constraintVertical_bias="0.506" />
 
     <Button
         android:id="@+id/btnReset"
