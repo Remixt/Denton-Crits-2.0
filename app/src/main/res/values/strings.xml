@@ -5,5 +5,10 @@
     <string name="pages">Pages</string>
     <string name="skip_to_timer">Skip to timer</string>
     <string name="start">Start</string>
+    <string name="break_up_groups">Break Up Groups</string>
+    <string name="clear_names">Clear Names</string>
+    <string name="delete_single">Delete Single</string>
+    <string name="sign_in_list">Sign in list</string>
+    <string name="timer">Timer</string>
 
 </resources>

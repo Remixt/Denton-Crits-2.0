@@ -16,7 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
 
     private EditText pagesEdit; // sign in entry form for number of pages
@@ -95,17 +95,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //starts the group sorting activity
-    public void startGroup(View view) {
+    public void navigateToGroupSort(View view) {
         startActivity(new Intent(MainActivity.this, GroupSortActivity.class));
     }
 
     //skip the sign in, and grouping activities, move to the timer activity
-    public void skipToTimer(View view) {
+    public void navigateToTimer(View view) {
         startActivity(new Intent(MainActivity.this, TimerActivity.class));
     }
 
     //empty the database
-    public void clearTable(View view) {
+    public void clearDatabase(View view) {
         //make sure they hit the button on purpose.
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // remove a specific entry from the database
-    public void removeSingle(View view) {
+    public void removeSingleEntry(View view) {
 
         p = database.getAllPeople();
         list = new ListView(this);
@@ -171,4 +171,8 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
 
     }
+
+    // email the sign in list
+
+
 }

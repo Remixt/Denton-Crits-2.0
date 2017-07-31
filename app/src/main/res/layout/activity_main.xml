@@ -17,47 +17,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:weightSum="1"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:weightSum="1">
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:srcCompat="@mipmap/crits_logo"
-                tools:layout_conversion_absoluteHeight="192dp"
-                tools:layout_conversion_absoluteWidth="384dp"
-                tools:layout_conversion_absoluteX="0dp"
-                tools:layout_conversion_absoluteY="240dp"
-                tools:layout_editor_absoluteY="240dp" />
-
-            <TextClock
-                android:id="@+id/textClock"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:textSize="35sp"
-                android:textStyle="bold"
-                tools:layout_conversion_absoluteHeight="65dp"
-                tools:layout_conversion_absoluteWidth="384dp"
-                tools:layout_conversion_absoluteX="0dp"
-                tools:layout_conversion_absoluteY="175dp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="175dp"
-                tools:targetApi="jelly_bean_mr1" />
         </LinearLayout>
 
         <LinearLayout
@@ -119,7 +89,7 @@
             android:id="@+id/lblSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign in list" />
+            android:text="@string/sign_in_list" />
 
         <ListView
             android:id="@+id/signInList"
@@ -137,8 +107,8 @@
                 android:id="@+id/btnStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="startGroup"
-                android:text="Start"
+                android:onClick="navigateToGroupSort"
+                android:text="@string/break_up_groups"
                 android:textAllCaps="false"
                 tools:layout_conversion_absoluteHeight="48dp"
                 tools:layout_conversion_absoluteWidth="384dp"
@@ -155,8 +125,8 @@
                 android:id="@+id/btnSkip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="skipToTimer"
-                android:text="@string/skip_to_timer"
+                android:onClick="navigateToTimer"
+                android:text="@string/timer"
                 android:textAllCaps="false"
                 tools:layout_conversion_absoluteHeight="48dp"
                 tools:layout_conversion_absoluteWidth="384dp"
@@ -179,8 +149,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="removeSingle"
-                    android:text="Delete Single"
+                    android:onClick="removeSingleEntry"
+                    android:text="@string/delete_single"
                     android:textAllCaps="false" />
 
                 <Space
@@ -193,8 +163,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="clearTable"
-                    android:text="Clear Names"
+                    android:onClick="clearDatabase"
+                    android:text="@string/clear_names"
                     android:textAllCaps="false"
                     tools:layout_conversion_absoluteHeight="48dp"
                     tools:layout_conversion_absoluteWidth="384dp"
