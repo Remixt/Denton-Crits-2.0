@@ -1,11 +1,11 @@
 package com.cbrant.writers;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -13,54 +13,45 @@ import java.util.List;
 
 public class GroupSortActivity extends AppCompatActivity {
     ListView list;
-    Adapter listAdapt;
     DatabaseHandler db;
-    ArrayList<String> names;
-    ArrayList<String> pages;
     ArrayList<Person> people;
     AssignGroupAdapter adapter;
-    List<Person> p;
-
+    ArrayList<String> p;
+    Button btnShuffle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_sort);
-        list = (ListView)findViewById(R.id.peopleList);
+       btnShuffle = findViewById(R.id.btnShuffle);
+        list = findViewById(R.id.peopleList);
         db = new DatabaseHandler(this);
-        p = db.getAllPeople();
-
-        names = new ArrayList<String>();
-        pages = new ArrayList<String>();
-        people = new ArrayList<Person>();
-        for (Person person : p) {
-            names.add(person.getName());
-            people.add(person);
-        }
-        adapter = new AssignGroupAdapter(this, people, names);
+        p = new ArrayList<String>();
+        people = db.getAllPeople();
+        for(int i = 0; i < people.size(); i++)
+            p.add(people.get(i).getName());
+        adapter = new AssignGroupAdapter(this, people, p);
         list.setAdapter(adapter);
         list.getAdapter().getCount();
+        System.out.println("Completed on Create in Group Activity");
     }
 
 
     //splits the groups in half and evenly distrubutes people who have pages (as much as possible)
-    public void shuffle(View view){
-    people = adapter.shuffle();
+    public void shuffle(View view) {
+        adapter.shuffle();
+        adapter.notifyDataSetChanged();
+        btnShuffle.setVisibility(View.GONE);
 
-        adapter = new AssignGroupAdapter(this, people,names);
-        list.setAdapter(adapter);
-        list.setClickable(false);
     }
 
-    public void reset(View view){
+    public void reset(View view) {
         for(int i = 0; i < people.size(); i++){
-            people.get(i).setGroup("White");
-            people.get(i).setAnchor("White");
+            people.get(i).setAnchor(0);
+            people.get(i).setGroup(0);
         }
-        adapter = new AssignGroupAdapter(this, people,names);
+        adapter = new AssignGroupAdapter(this, people, p);
         list.setAdapter(adapter);
-        list.setClickable(true);
-    }
-    public void goToTimer(View view) {
-        startActivity(new Intent(GroupSortActivity.this, TimerActivity.class));
+        list.getAdapter().getCount();
+        btnShuffle.setVisibility(View.VISIBLE);
     }
 }

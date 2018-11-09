@@ -1,32 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sortGroupListLayout"
     android:layout_width="match_parent"
-    android:layout_height="45dp"
+    android:layout_height="wrap_content"
     android:weightSum="1">
 
-    <ImageView
-        android:id="@+id/iconIsAnchor"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:src="@drawable/anchor"></ImageView>
+    <LinearLayout
+        android:id="@+id/groupListItemLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <TextView
-        android:id="@+id/lblName"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_weight="1.02"
-        android:text="Name"
-        android:textAlignment="viewStart"
-        android:textSize="36sp"
-        android:textStyle="bold"></TextView>
+        <ImageView
+            android:id="@+id/btnDelete"
+            style="@android:style/Widget.ImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight=".03"
+            android:background="@android:drawable/screen_background_light_transparent"
+            android:contentDescription="@string/todo"
+            android:onClick="removeSingleEntry"
+            android:scaleType="centerCrop"
+            android:tint="@android:color/holo_red_dark"
+            android:visibility="visible"
+            app:srcCompat="@android:drawable/ic_menu_delete" />
 
-    <TextView
-        android:id="@+id/lblPages"
-        android:layout_width="64dp"
-        android:layout_height="45dp"
-        android:text="9"
-        android:textAlignment="center"
-        android:textSize="36sp"
-        android:textStyle="bold"></TextView>
+        <TextView
+            android:id="@+id/lblName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/name"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:visibility="visible"></TextView>
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/iconIsAnchor"
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".05"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/anchor"
+            android:visibility="gone"></ImageView>
+
+        <TextView
+            android:id="@+id/lblPages"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".1"
+            android:text="@string/num_pages"
+            android:textAlignment="center"
+            android:textSize="36sp"
+            android:textStyle="bold"></TextView>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

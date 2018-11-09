@@ -1,5 +1,5 @@
 package com.cbrant.writers;
-
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,9 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-
-
+public class MainActivity extends Activity {
     private EditText pagesEdit; // sign in entry form for number of pages
     private EditText namesEdit; // sign in entry form for the member name
     private DatabaseHandler database; // handles all database operations
@@ -27,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> displayNameList; // list of the names for each member signed in, used in the display under name and pages form.
     ArrayList<Person> people; // list of people currently signed in, and in the database. Includes their name, id, number of pages, and group status (IE blue group or orange group, anchor ect..)
     ModifiableListAdapter adapter; // adapter that displays a list of members currently in the database, includes action listeners that allow deletion.
+    SignInListAdapter signInAdapter;
     List<Person> p;
     ListView list;
     ListView signInList;
@@ -42,9 +41,7 @@ public class MainActivity extends AppCompatActivity {
         database = new DatabaseHandler(this);
         people = new ArrayList<>();
         signInList = (ListView) findViewById(R.id.signInList);
-        signInListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, displayNameList);
-        signInList.setAdapter(signInListAdapter);
-
+        signInListAdapter = new SignInListAdapter(this, people, displayNameList);
     }
 
     //records the values entered for name and pages, creates a new instance of person class to keep track.
@@ -62,10 +59,11 @@ public class MainActivity extends AppCompatActivity {
                     .show();
         } else {
 
-            Person person = new Person(namesEdit.getText().toString(), pagesEdit.getText().toString());
+            Person person = new Person(namesEdit.getText().toString(), Integer.parseInt(pagesEdit.getText().toString()));
             database.addPerson(person);
             people.add(person);
             displayNameList.add(person.getName());
+            signInList.setAdapter(signInListAdapter);
 
             // update the visible sign in list view
             signInListAdapter.notifyDataSetChanged();
@@ -78,16 +76,6 @@ public class MainActivity extends AppCompatActivity {
             InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             mgr.hideSoftInputFromWindow(namesEdit.getWindowToken(), 0);
 
-            // display the welcome dialog with the users name for further sign in confirmation
-            new AlertDialog.Builder(this)
-                    .setMessage("Welcome " + namesEdit.getText().toString() + "!")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-
             // reset the sign in form to allow others to sign in
             namesEdit.setText("");
             pagesEdit.setText("");
@@ -95,17 +83,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //starts the group sorting activity
-    public void startGroup(View view) {
+    public void navigateToGroupSort(View view) {
         startActivity(new Intent(MainActivity.this, GroupSortActivity.class));
     }
 
     //skip the sign in, and grouping activities, move to the timer activity
-    public void skipToTimer(View view) {
+    public void navigateToTimer(View view) {
         startActivity(new Intent(MainActivity.this, TimerActivity.class));
     }
 
     //empty the database
-    public void clearTable(View view) {
+    public void clearDatabase(View view) {
         //make sure they hit the button on purpose.
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -132,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // remove a specific entry from the database
-    public void removeSingle(View view) {
+    public void removeSingleEntry(View view) {
 
         p = database.getAllPeople();
         list = new ListView(this);
@@ -171,4 +159,8 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
 
     }
+
+    // email the sign in list
+
+
 }

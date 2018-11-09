@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
  * Created by Sam on 5/23/17.
  */
 
-public class TimerActivity extends AppCompatActivity{
+public class TimerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

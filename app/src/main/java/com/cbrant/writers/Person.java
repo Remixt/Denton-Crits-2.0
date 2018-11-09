@@ -6,100 +6,59 @@ package com.cbrant.writers;
  */
 
 public class Person {
+    private String name;
+    private int group = 0;
+    private int anchor = 0;
+    private int pages = 0;
+    private int id = 0;
 
-    //private variables
-    private int id; // unique identifier, for allowing duplicates and searches.
-    private String name; // member name
-    private String pages; // number of pages member has, using string for easy database writing.
-    private boolean isOrange = false;  // is in orange group
-    private boolean isBlue = false; // is in blue group
-    private boolean isBlueA = false; // is a blue anchor
-    private boolean isOrangeA = false; // is an orange anchor
+    public Person(){}
+    public Person(String n){
+        name = n;
+    }
+    public Person(String n, int p){
+        name = n;
+        pages = p;
+    }
+    public Person(String n, int a, int p){
+        name = n;
+        anchor = a;
+        pages = p;
+        group = 0;
+    }
 
-    // Empty constructor
-    public Person() {
-
-    }
-    // constructor
-    public Person(String name, String pages) {
-        this.name = name;
-        this.pages = pages;
-    }
-    // getting ID
-    public int getID() {
-        return this.id;
-    }
-    // setting id
-    public void setID(int id) {
-        this.id = id;
-    }
-    // getting name
     public String getName() {
-        return this.name;
+        return name;
     }
-    // setting name
     public void setName(String name) {
         this.name = name;
     }
-    // getting number of pages
-    public String getPages() {
-        return this.pages;
+
+    public int getGroup() {
+        return group;
     }
-    // setting number of pages
-    public void setPages(String pages) {
-        this.pages = pages;
-    }
-    //set if the person is an orange anchor, blue anchor, or not an anchor.
-    public void setAnchor(String color){
-        if (color.equals("Blue")){
-            isBlueA = true;
-            isOrangeA = false;
-            isOrange = false;
-            isBlue = false;
-        }else if(color.equals("Orange")){
-            isOrangeA = true;
-            isBlueA = false;
-            isBlue = false;
-            isOrange = false;
-        }else{
-            isOrangeA = false;
-            isBlueA = false;
-        }
-    }
-    //set which group the person is in, sets other group and anchor booleans to false since you can only be one.
-    public void setGroup(String color){
-        if (color.equals("Blue")){
-            isBlue = true;
-            isOrange = false;
-            isOrangeA = false;
-            isBlueA = false;
-        }else if(color.equals("Orange")){
-            isOrange = true;
-            isBlue = false;
-            isOrangeA = false;
-            isBlueA = false;
-        }else{
-            isOrange = false;
-            isBlue = false;
-            isOrangeA = false;
-            isBlueA = false;
-        }
-    }
-    //check if orange anchor
-    public boolean isOrangeAnchor() {
-        return isOrangeA;
-    }
-    //check if orange group
-    public boolean isOrangeGroup(){
-        return isOrange;
-    }
-    //check if blue anchor
-    public boolean isBlueAnchor() {
-        return isBlueA;
-    }
-    //check if blue group
-    public boolean isBlueGroup(){
-        return isBlue;
+    public void setGroup(int group) {
+        this.group = group;
     }
 
+    public int getAnchor() {
+        return anchor;
+    }
+    public void setAnchor(int anchor) {
+        this.anchor = anchor;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 }

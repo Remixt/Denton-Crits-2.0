@@ -1,13 +1,12 @@
 package com.cbrant.writers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -29,7 +28,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_SIGNIN + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + PAGES + " TEXT" + ")";
+                + PAGES + " INTEGER" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -43,6 +42,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Add new person to the database
     void addPerson(Person person) {
+        System.err.println("Adding " + person.getName() + " to database!");
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, person.getName()); // Person Name
@@ -57,7 +57,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         boolean exists = false;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_SIGNIN, new String[]{KEY_ID, KEY_NAME, PAGES}, KEY_ID + "=?",
-                new String[]{Integer.toString(person.getID())}, null, null, null, null);
+                new String[]{Integer.toString(person.getId())}, null, null, null, null);
         if (cursor != null) {
             exists = true;
             cursor.moveToFirst();
@@ -76,11 +76,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Person person = new Person();
-                person.setID(Integer.parseInt(cursor.getString(0)));
+                person.setId(Integer.parseInt(cursor.getString(0)));
                 person.setName(cursor.getString(1));
-                person.setPages(cursor.getString(2));
+                person.setPages(cursor.getInt(2));
                 // Adding person to list
                 personList.add(person);
+                System.err.println("Found " + person.getName() + " in database!" );
             } while (cursor.moveToNext());
         }
         // return person list
@@ -97,7 +98,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // updating row
         return db.update(TABLE_SIGNIN, values, KEY_ID + " = ?",
-                new String[]{String.valueOf(person.getID())});
+                new String[]{String.valueOf(person.getId())});
     }
 
     // Deleting every entry in the database
@@ -111,7 +112,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void deletePerson(Person person) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_SIGNIN, KEY_ID + " = ?",
-                new String[]{String.valueOf(person.getID())});
+                new String[]{String.valueOf(person.getId())});
         db.close();
     }
 }
