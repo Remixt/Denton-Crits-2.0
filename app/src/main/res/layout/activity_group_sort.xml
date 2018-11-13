@@ -1,87 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/groupSortLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1"
-    tools:context="com.cbrant.writers.GroupSortActivity"
-    tools:layout_editor_absoluteY="0dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:context="com.remixt.crit.GroupSortActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+    <ListView
+        android:id="@+id/peopleList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:foregroundGravity="fill"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/btnReset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/groupSortLayout"
+        app:layout_constraintTop_toTopOf="@id/groupSortLayout">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+    </ListView>
 
-            <ListView
-                android:id="@+id/peopleList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:choiceMode="multipleChoice"
-                android:clickable="true"
-                android:fastScrollEnabled="true"
-                android:footerDividersEnabled="true"
-                android:hapticFeedbackEnabled="true"
-                android:headerDividersEnabled="true"
-                android:keepScreenOn="true"
-                tools:layout_editor_absoluteX="9dp"
-                tools:layout_editor_absoluteY="0dp" />
+    <Button
+        android:id="@+id/btnShuffle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="right|fill_vertical|fill|end"
+        android:onClick="shuffle"
+        android:text="@string/shuffle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnReset" />
 
-        </LinearLayout>
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:onClick="reset"
+        android:text="reset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnReset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="reset"
-                android:text="Reset"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/peopleList"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <Button
-                android:id="@+id/goTimer"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:onClick="goToTimer"
-                android:text="go to timer"
-                app:layout_constraintLeft_toRightOf="@+id/btnSort"
-                app:layout_constraintRight_toLeftOf="@+id/btnReset"
-                app:layout_constraintTop_toBottomOf="@+id/peopleList" />
-
-            <Button
-                android:id="@+id/btnSort"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:onClick="shuffle"
-                android:text="Shuffle"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/peopleList"
-                app:layout_constraintVertical_bias="0.0" />
-        </LinearLayout>
-    </LinearLayout>
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

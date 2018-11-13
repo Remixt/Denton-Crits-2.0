@@ -1,4 +1,4 @@
-package com.cbrant.writers;
+package com.remixt.crit;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -81,7 +81,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 person.setPages(cursor.getInt(2));
                 // Adding person to list
                 personList.add(person);
-                System.err.println("Found " + person.getName() + " in database!" );
+                System.err.println("Found " + person.getName() + " in database!");
             } while (cursor.moveToNext());
         }
         // return person list
@@ -109,10 +109,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Delete a single person from the database
-    public void deletePerson(Person person) {
+    public void deletePerson(Person p) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_SIGNIN, KEY_ID + " = ?",
-                new String[]{String.valueOf(person.getId())});
+        db.delete(TABLE_SIGNIN, "NAME = ? AND PAGES = ?", new String[]{p.getName(), Integer.toString(p.getPages())});
         db.close();
     }
 }

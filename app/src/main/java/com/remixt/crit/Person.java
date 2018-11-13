@@ -1,4 +1,4 @@
-package com.cbrant.writers;
+package com.remixt.crit;
 
 /**
  * Created by cbrant on 5/17/2017.
@@ -11,16 +11,21 @@ public class Person {
     private int anchor = 0;
     private int pages = 0;
     private int id = 0;
+    private boolean selected = false;
 
-    public Person(){}
-    public Person(String n){
+    public Person() {
+    }
+
+    public Person(String n) {
         name = n;
     }
-    public Person(String n, int p){
+
+    public Person(String n, int p) {
         name = n;
         pages = p;
     }
-    public Person(String n, int a, int p){
+
+    public Person(String n, int a, int p) {
         name = n;
         anchor = a;
         pages = p;
@@ -30,6 +35,7 @@ public class Person {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -37,6 +43,7 @@ public class Person {
     public int getGroup() {
         return group;
     }
+
     public void setGroup(int group) {
         this.group = group;
     }
@@ -44,6 +51,7 @@ public class Person {
     public int getAnchor() {
         return anchor;
     }
+
     public void setAnchor(int anchor) {
         this.anchor = anchor;
     }
@@ -51,6 +59,7 @@ public class Person {
     public int getPages() {
         return pages;
     }
+
     public void setPages(int pages) {
         this.pages = pages;
     }
@@ -58,7 +67,16 @@ public class Person {
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

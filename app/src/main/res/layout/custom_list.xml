@@ -15,25 +15,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageView
-            android:id="@+id/btnDelete"
-            style="@android:style/Widget.ImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight=".03"
-            android:background="@android:drawable/screen_background_light_transparent"
-            android:contentDescription="@string/todo"
-            android:onClick="removeSingleEntry"
-            android:scaleType="centerCrop"
-            android:tint="@android:color/holo_red_dark"
-            android:visibility="visible"
-            app:srcCompat="@android:drawable/ic_menu_delete" />
-
         <TextView
             android:id="@+id/lblName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight=".5"
             android:text="@string/name"
             android:textSize="36sp"
             android:textStyle="bold"

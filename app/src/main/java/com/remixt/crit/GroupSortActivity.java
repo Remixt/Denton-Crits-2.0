@@ -1,15 +1,12 @@
-package com.cbrant.writers;
+package com.remixt.crit;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GroupSortActivity extends AppCompatActivity {
     ListView list;
@@ -18,16 +15,17 @@ public class GroupSortActivity extends AppCompatActivity {
     AssignGroupAdapter adapter;
     ArrayList<String> p;
     Button btnShuffle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_sort);
-       btnShuffle = findViewById(R.id.btnShuffle);
+        btnShuffle = findViewById(R.id.btnShuffle);
         list = findViewById(R.id.peopleList);
         db = new DatabaseHandler(this);
         p = new ArrayList<String>();
         people = db.getAllPeople();
-        for(int i = 0; i < people.size(); i++)
+        for (int i = 0; i < people.size(); i++)
             p.add(people.get(i).getName());
         adapter = new AssignGroupAdapter(this, people, p);
         list.setAdapter(adapter);
@@ -45,7 +43,7 @@ public class GroupSortActivity extends AppCompatActivity {
     }
 
     public void reset(View view) {
-        for(int i = 0; i < people.size(); i++){
+        for (int i = 0; i < people.size(); i++) {
             people.get(i).setAnchor(0);
             people.get(i).setGroup(0);
         }

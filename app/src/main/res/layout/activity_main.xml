@@ -1,212 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/topLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
+    android:layout_gravity="fill"
+    android:clickable="false"
+    android:focusable="true"
     android:orientation="vertical"
     android:visibility="visible"
     android:weightSum="1"
-    tools:context="com.cbrant.writers.MainActivity"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
-
+    tools:context="com.remixt.crit.MainActivity">
 
     <LinearLayout
+        android:id="@+id/formEntry"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/btnSignin"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/nameField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:autofillHints=""
+            android:ems="15"
+            android:gravity="fill_vertical|center|start"
+            android:hint="@string/name"
+            android:inputType="textPersonName"
+            android:lines="1"
+            android:maxLength="15"
+            android:maxLines="1"
+            tools:targetApi="o" />
+
+        <EditText
+            android:id="@+id/pageField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:autofillHints=""
+            android:ems="5"
+            android:gravity="top|bottom|start"
+            android:hint="@string/pages"
+            android:inputType="number"
+            android:maxLength="2"
+            tools:targetApi="o" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSignin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:weightSum="1">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="?attr/colorControlActivated"
+        android:onClick="signIn"
+        android:text="@string/sign_in"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/formEntry"></Button>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <TextView
+        android:id="@+id/lblSignIn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignin" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:srcCompat="@mipmap/crits_logo"
-                tools:layout_conversion_absoluteHeight="192dp"
-                tools:layout_conversion_absoluteWidth="384dp"
-                tools:layout_conversion_absoluteX="0dp"
-                tools:layout_conversion_absoluteY="240dp"
-                tools:layout_editor_absoluteY="240dp" />
-
-            <TextClock
-                android:id="@+id/textClock"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:textSize="35sp"
-                android:textStyle="bold"
-                tools:layout_conversion_absoluteHeight="65dp"
-                tools:layout_conversion_absoluteWidth="384dp"
-                tools:layout_conversion_absoluteX="0dp"
-                tools:layout_conversion_absoluteY="175dp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="175dp"
-                tools:targetApi="jelly_bean_mr1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/nameField"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/name"
-                android:inputType="textPersonName"
-                android:lines="1"
-                android:maxLength="15"
-                android:maxLines="1"
-                tools:layout_conversion_absoluteHeight="77dp"
-                tools:layout_conversion_absoluteWidth="260dp"
-                tools:layout_conversion_absoluteX="0dp"
-                tools:layout_conversion_absoluteY="0dp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="0dp" />
-
-            <EditText
-                android:id="@+id/pageField"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/pages"
-                android:inputType="number"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:layout_conversion_absoluteHeight="77dp"
-                tools:layout_conversion_absoluteWidth="124dp"
-                tools:layout_conversion_absoluteX="260dp"
-                tools:layout_conversion_absoluteY="0dp"
-                tools:layout_editor_absoluteY="8dp" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btnSignin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorControlActivated"
-            android:onClick="signIn"
-            android:text="@string/sign_in"
-            android:textAllCaps="false"
-            tools:layout_conversion_absoluteHeight="98dp"
-            tools:layout_conversion_absoluteWidth="384dp"
-            tools:layout_conversion_absoluteX="0dp"
-            tools:layout_conversion_absoluteY="77dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="77dp" />
-
-        <TextView
-            android:id="@+id/lblSignIn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign in list" />
+    <FrameLayout
+        android:id="@+id/signInFrame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/btnClear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblSignIn">
 
         <ListView
             android:id="@+id/signInList"
             style="@style/Widget.AppCompat.ListView.Menu"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:fadingEdge="horizontal|vertical" />
+            android:layout_height="match_parent"
+            android:fadingEdge="horizontal|vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        </ListView>
+    </FrameLayout>
 
-            <Button
-                android:id="@+id/btnStart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="startGroup"
-                android:text="Start"
-                android:textAllCaps="false"
-                tools:layout_conversion_absoluteHeight="48dp"
-                tools:layout_conversion_absoluteWidth="384dp"
-                tools:layout_conversion_absoluteX="0dp"
-                tools:layout_conversion_absoluteY="432dp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="432dp" />
+    <Button
+        android:id="@+id/btnStart"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="navigateToGroupSort"
+        android:text="@string/start"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="25dp" />
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="clearDatabase"
+        android:text="@string/btn_new"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-            <Button
-                android:id="@+id/btnSkip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="skipToTimer"
-                android:text="@string/skip_to_timer"
-                android:textAllCaps="false"
-                tools:layout_conversion_absoluteHeight="48dp"
-                tools:layout_conversion_absoluteWidth="384dp"
-                tools:layout_conversion_absoluteX="0dp"
-                tools:layout_conversion_absoluteY="528dp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="528dp" />
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorError"
+        android:onClick="removeSingleEntry"
+        android:text="@string/delete_selection"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnClear"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toEndOf="@+id/btnStart" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="25dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnDelete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="removeSingle"
-                    android:text="Delete Single"
-                    android:textAllCaps="false" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/btnClear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="clearTable"
-                    android:text="Clear Names"
-                    android:textAllCaps="false"
-                    tools:layout_conversion_absoluteHeight="48dp"
-                    tools:layout_conversion_absoluteWidth="384dp"
-                    tools:layout_conversion_absoluteX="0dp"
-                    tools:layout_conversion_absoluteY="480dp"
-                    tools:layout_editor_absoluteX="0dp"
-                    tools:layout_editor_absoluteY="480dp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

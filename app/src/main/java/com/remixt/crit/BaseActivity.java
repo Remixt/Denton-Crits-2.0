@@ -1,4 +1,4 @@
-package com.cbrant.writers;
+package com.remixt.crit;
 
 
 import android.os.Bundle;
